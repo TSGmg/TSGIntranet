@@ -1,59 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSG Intranet - Total Solutions Group</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TSG Intranet - Total Solutions Group</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-blue-50 to-orange-50 min-h-screen">
-    <div id="root"></div>
-    <script>
-        let state = { currentPage: 'home', searchTerm: '', filterDept: 'all', filterStatus: 'all' };
-        const data = {
-            announcements: [
-                { id: 1, title: 'January Huddle Recap - Slang Game Winners! 🎉', date: '2026-01-16', category: 'Huddle', hasImage: false, description: 'Kayla Hoover, Jose Soto, and Elvira Borbon won the Slang Game! Tom Margio received the 2025 Grizzly Bear Award for wrestling finances into order. 🐻💪' },
-                { id: 2, title: 'Invoicing Deadline - January 23rd', date: '2026-01-16', category: 'Accounting', hasImage: false, description: 'Please submit all invoicing to Accounting ASAP. Last day to submit is Wednesday, January 23rd.' },
-                { id: 3, title: '🎯 Unlock the Client Clues Mini Game - NOW LIVE!', date: '2026-01-16', category: 'Mini-Game', hasImage: false, description: 'Earn points by learning about our clients! Complete the "Getting to Know Our Partners" form. Team goal: 750 points in 90 days. +5 bonus points for in-person visits!' },
-                { id: 4, title: 'Huddlemaster Sign-Up Sheet Posted! 🎤', date: '2026-01-16', category: 'Culture', hasImage: false, description: 'Want to lead a huddle? The sign-up sheet is in the main break room. Bring your vibes, jokes, and energy!' },
-                { id: 5, title: 'GGOB Culture Committee - Open Roles', date: '2026-01-16', category: 'Opportunities', hasImage: false, description: 'Join the Culture Committee! Roles available: ESOP Chairperson, Mini-Games, Huddle, Onboarding, and Employee Engagement. Email culture@mytsghome.com' },
-                { id: 6, title: '🌶️ GOBA Chili Cook-Off & Oyster Roast - Jan 21', date: '2026-01-16', category: 'Event', hasImage: false, description: 'Wed 1/21, 5:30-7:30 PM at Florida Paints Warehouse. Chili, oysters, live music, and serious taste testing! 🔥' },
-                { id: 7, title: '📚 TSG Book Club - "Listening Pays"', date: '2026-01-16', category: 'Book Club', hasImage: false, description: 'Join us every other week (30-45 mins, off the clock) to discuss "Listening Pays" by Rick Bommelje. Snacks & drinks provided! Contact Patricia.' }
-            ],
-            quickLinks: [
-                { name: 'Paychex Time Tracking', url: 'https://login.flex.paychex.com/login_static/UsernameOnly.html?lang=en&downtime=false' },
-                { name: 'Ajera - Project Portal', url: 'https://login.ajera.com/' },
-                { name: 'EOS Ninety - L10', url: 'https://eos.ninety.io/home' },
-                { name: 'The Standard Benefits', url: 'https://login.standard.com/' },
-                { name: 'Employee Handbook', url: 'file:///O:/Company%20Handbook/TSG%20Handbook%202024%20rev.%2008.01.24.pdf' },
-                { name: 'Training', url: 'https://productivitynow.imaginit.com/#/login' }
-            ],
-            metrics: [
-                { metric: 'Total Billing Projections', value: '$697,000', target: '', status: 'neutral' },
-                { metric: 'Actual Invoicing Totals', value: '$79,775', target: 'Goal: $697,000', status: 'behind' },
-                { metric: 'Quarter Bonus Progress', value: '($172,850)', target: 'YTD PBT', status: 'behind' },
-                { metric: 'Dreams Come True', value: '7,845', target: 'YTD (2025)', status: 'on-track' }
-            ],
-            employees: [
-                { name: 'Mike Keesee', role: 'Founder & CEO', department: 'Leadership', status: 'online', email: 'mkeesee@mytsghome.com', phone: '(407) 880-2333' },
-                { name: 'Carl Brown', role: 'Co-Founder & Engineering Director', department: 'Engineering', status: 'online', email: 'cbrown@mytsghome.com', phone: '(407) 880-2333' },
-                { name: 'Alan Smith', role: 'COO', department: 'Leadership', status: 'away', email: 'asmith@mytsghome.com', phone: '(407) 880-2333' },
-                { name: 'Allen Beaumont', role: 'Director of Business Development', department: 'Commercial', status: 'online', email: 'abeaumont@mytsghome.com', phone: '(407) 880-2333' },
-                { name: 'Michelle Brown', role: 'HR Director', department: 'Leadership', status: 'online', email: 'mbrown@mytsghome.com', phone: '(407) 880-2333' },
-                { name: 'Melisa Jones', role: 'Finance Manager', department: 'Leadership', status: 'offline', email: 'mjones@mytsghome.com', phone: '(407) 880-2333' }
-            ]
-        };
-        function getInitials(n){return n.split(' ').map(x=>x[0]).join('')}
-        function getStatusColor(s){return{online:'bg-green-500',away:'bg-yellow-500',busy:'bg-red-500',offline:'bg-gray-400'}[s]||'bg-gray-400'}
-        function getStatusBadge(s){return{online:'bg-green-100 text-green-700',away:'bg-yellow-100 text-yellow-700',busy:'bg-red-100 text-red-700',offline:'bg-gray-100 text-gray-700'}[s]||'bg-gray-100 text-gray-700'}
-        function Header(){return`<header class="bg-white shadow-sm border-b border-gray-200"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center py-4 flex-wrap gap-4"><div class="flex items-center space-x-3"><div class="border-4 border-blue-500 p-2 rounded"><div class="text-blue-600 font-bold text-2xl leading-none">TSG</div><div class="text-blue-800 text-xs font-semibold tracking-wider leading-none">TOTAL SOLUTIONS</div><div class="text-blue-800 text-xs font-semibold tracking-wider leading-none">GROUP</div></div><div class="h-8 w-px bg-gray-300"></div><span class="text-gray-600 font-medium">Intranet</span></div><nav class="flex space-x-1 flex-wrap"><button onclick="navigate('home')" class="px-4 py-2 rounded transition text-sm ${state.currentPage==='home'?'bg-blue-600 text-white':'text-gray-600 hover:bg-gray-100'}">Home</button><button onclick="navigate('commercial')" class="px-4 py-2 rounded transition text-sm ${state.currentPage==='commercial'?'bg-blue-600 text-white':'text-gray-600 hover:bg-gray-100'}">Commercial</button><button onclick="navigate('engineering')" class="px-4 py-2 rounded transition text-sm ${state.currentPage==='engineering'?'bg-blue-600 text-white':'text-gray-600 hover:bg-gray-100'}">Engineering</button><button onclick="navigate('production')" class="px-4 py-2 rounded transition text-sm ${state.currentPage==='production'?'bg-blue-600 text-white':'text-gray-600 hover:bg-gray-100'}">Production</button><button onclick="navigate('directory')" class="px-4 py-2 rounded transition text-sm ${state.currentPage==='directory'?'bg-blue-600 text-white':'text-gray-600 hover:bg-gray-100'}">Directory</button></nav></div></div></header>`}
-        function HomePage(){return`<div class="space-y-6"><div class="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-xl overflow-hidden shadow-lg"><div class="grid grid-cols-1 lg:grid-cols-2"><div class="p-8 flex flex-col justify-center text-white"><h1 class="text-3xl font-bold mb-1">Welcome Back!</h1><p class="text-blue-50 mt-3 text-sm">One Vision, One Goal, One Team</p></div><div class="relative h-48 lg:h-auto bg-blue-400 flex items-center justify-center"><div class="absolute inset-0 bg-gradient-to-r from-blue-600/50 to-transparent"></div><div class="relative text-center text-white/70 p-8"><svg class="w-16 h-16 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg><p class="text-sm">Team Photo Banner</p><p class="text-xs mt-1">(Replace with team photo)</p></div></div></div></div><div class="bg-white rounded-xl shadow-md border border-orange-100"><div class="p-6 border-b border-gray-200 bg-gradient-to-r from-white to-orange-50"><div class="flex items-center justify-between"><h2 class="text-xl font-bold text-gray-800">Company Announcements</h2><button class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button></div></div><div class="p-6 space-y-4">${data.announcements.map(a=>`<div class="border-l-4 border-orange-400 pl-4 py-2 hover:bg-orange-50 cursor-pointer transition rounded-r"><div class="flex items-start space-x-4">${a.hasImage?'<div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded flex items-center justify-center text-gray-400">📷</div>':''}<div class="flex-1"><h3 class="font-semibold text-gray-800">${a.title}</h3><p class="text-sm text-gray-600 mt-1">${a.description}</p><div class="flex items-center space-x-4 mt-2"><span class="text-sm text-gray-500">${a.date}</span><span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">${a.category}</span></div></div></div></div>`).join('')}</div></div><div class="bg-white rounded-lg shadow"><div class="p-6 border-b border-gray-200"><div class="flex items-center justify-between"><h2 class="text-xl font-bold text-gray-800">EOS Scorecard</h2><span class="text-sm text-gray-500">Updated: Jan 19, 2026</span></div></div><div class="p-6"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">${data.metrics.map(m=>`<div class="p-4 border border-gray-200 rounded-lg"><div class="text-sm text-gray-600 mb-2">${m.metric}</div><div class="text-2xl font-bold mb-1 ${m.status==='behind'?'text-red-600':'text-gray-800'}">${m.value}</div>${m.target?`<div class="text-xs text-gray-500">${m.target}</div>`:''}${m.status!=='neutral'?`<div class="mt-2"><span class="text-xs px-2 py-1 rounded ${m.status==='exceeding'?'bg-green-100 text-green-700':m.status==='on-track'?'bg-blue-100 text-blue-700':'bg-red-100 text-red-700'}">${m.status==='exceeding'?'↑ Exceeding':m.status==='on-track'?'→ On Track':'↓ Behind'}</span></div>`:''}</div>`).join('')}</div></div></div><div class="bg-white rounded-lg shadow"><div class="p-6 border-b border-gray-200"><h2 class="text-xl font-bold text-gray-800">Quick Links</h2></div><div class="p-6"><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">${data.quickLinks.map(link=>`<a href="${link.url}" class="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow transition cursor-pointer"><div class="w-8 h-8 text-blue-600 mb-2">⚡</div><span class="text-sm text-gray-700 text-center">${link.name}</span></a>`).join('')}</div></div></div><div class="bg-white rounded-xl shadow-md border border-gray-200"><div class="p-6 border-b border-gray-200"><h2 class="text-xl font-bold text-gray-800">Division Pages</h2><p class="text-sm text-gray-600 mt-1">Access your division's files, team info, and resources</p></div><div class="p-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-4">${['Commercial','Engineering','Production'].map((d,i)=>`<button onclick="navigate('${d.toLowerCase()}')" class="p-5 bg-gray-50 rounded-lg hover:bg-blue-50 hover:shadow-md transition border border-gray-200 hover:border-blue-400 text-left group"><div class="flex items-center justify-between mb-3"><div class="w-10 h-10 bg-blue-${5+i}00 rounded-lg flex items-center justify-center group-hover:scale-110 transition text-white font-bold">${d[0]}</div></div><h3 class="text-base font-bold text-gray-800 mb-1">${d}</h3><p class="text-xs text-gray-500">View team & files</p></button>`).join('')}</div></div></div></div>`}
-        function DirectoryPage(){const filtered=data.employees.filter(emp=>{const matchSearch=!state.searchTerm||emp.name.toLowerCase().includes(state.searchTerm.toLowerCase())||emp.role.toLowerCase().includes(state.searchTerm.toLowerCase());const matchDept=state.filterDept==='all'||emp.department===state.filterDept;const matchStatus=state.filterStatus==='all'||emp.status===state.filterStatus;return matchSearch&&matchDept&&matchStatus});const depts=['all',...new Set(data.employees.map(e=>e.department))];const statuses=['all','online','away','busy','offline'];return`<div class="space-y-6"><div class="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-xl p-6 text-white shadow-lg"><h1 class="text-3xl font-bold">Employee Directory</h1><p class="text-blue-100 mt-1">Find and connect with your teammates</p></div><div class="bg-white rounded-xl shadow-md p-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label class="block text-sm font-medium text-gray-700 mb-2">Search</label><input type="text" id="searchInput" placeholder="Name, role, or email..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="${state.searchTerm}"></div><div><label class="block text-sm font-medium text-gray-700 mb-2">Department</label><select id="deptFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">${depts.map(d=>`<option value="${d}" ${state.filterDept===d?'selected':''}>${d==='all'?'All Departments':d}</option>`).join('')}</select></div><div><label class="block text-sm font-medium text-gray-700 mb-2">Status</label><select id="statusFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">${statuses.map(s=>`<option value="${s}" ${state.filterStatus===s?'selected':''}>${s==='all'?'All Statuses':s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select></div></div><div class="mt-4 text-sm text-gray-600">Showing ${filtered.length} of ${data.employees.length} employees</div></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">${filtered.map(emp=>`<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition border border-gray-200 p-6"><div class="flex items-start space-x-3 mb-4"><div class="relative"><div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">${getInitials(emp.name)}</div><span class="absolute bottom-0 right-0 w-4 h-4 ${getStatusColor(emp.status)} rounded-full border-2 border-white"></span></div><div><h3 class="font-bold text-gray-800">${emp.name}</h3><span class="text-xs px-2 py-1 rounded ${getStatusBadge(emp.status)}">${emp.status.charAt(0).toUpperCase()+emp.status.slice(1)}</span></div></div><p class="text-sm text-gray-600">${emp.role}</p><p class="text-xs text-blue-600 font-medium mt-1">${emp.department}</p><div class="pt-3 border-t border-gray-200 mt-3 space-y-2"><a href="mailto:${emp.email}" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-blue-600"><span>✉️</span><span class="truncate">${emp.email}</span></a><a href="tel:${emp.phone}" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-blue-600"><span>📞</span><span>${emp.phone}</span></a></div></div>`).join('')}</div></div>`}
-        function DivisionPage(div){const titles={commercial:'Commercial Division',engineering:'Engineering Division',production:'Production Division'};const colors={commercial:'from-blue-500 to-blue-600',engineering:'from-blue-600 to-blue-700',production:'from-blue-700 to-blue-800'};return`<div class="space-y-6"><div class="bg-gradient-to-r ${colors[div]} rounded-xl overflow-hidden shadow-lg"><div class="grid grid-cols-1 lg:grid-cols-2"><div class="p-8 flex flex-col justify-center text-white"><h1 class="text-3xl font-bold mb-2">${titles[div]}</h1><p class="text-lg text-blue-100">Team resources and files</p></div><div class="relative h-48 lg:h-auto bg-blue-300 flex items-center justify-center"><div class="absolute inset-0 bg-gradient-to-r from-blue-700/50 to-transparent"></div><div class="relative text-center text-white/70 p-8"><div class="text-4xl mb-2">👥</div><p class="text-sm">${titles[div]} Team Photo</p><p class="text-xs mt-1">(Replace with team photo)</p></div></div></div></div><div class="bg-white rounded-lg shadow p-6"><h2 class="text-lg font-bold text-gray-800 mb-4">Search Division Documents</h2><div class="flex gap-2"><input type="text" placeholder="Search files..." class="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"><button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Search</button></div><p class="text-sm text-gray-500 mt-2">Connected to: Google Drive - ${titles[div]} Folder (Integration Required)</p></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-lg shadow p-6"><h2 class="text-xl font-bold text-gray-800 mb-4">Division Updates</h2><div class="space-y-4"><div class="border-l-4 border-blue-500 pl-4 py-2"><h3 class="font-semibold text-gray-800">New Project Kickoff</h3><p class="text-sm text-gray-600 mt-1">Major project starting next week</p><span class="text-xs text-gray-500">Oct 28, 2025</span></div><div class="border-l-4 border-blue-500 pl-4 py-2"><h3 class="font-semibold text-gray-800">Team Training Session</h3><p class="text-sm text-gray-600 mt-1">New software training scheduled</p><span class="text-xs text-gray-500">Oct 26, 2025</span></div></div></div><div class="bg-white rounded-lg shadow p-6"><h2 class="text-xl font-bold text-gray-800 mb-4">Team Members</h2><div class="space-y-3">${data.employees.filter(e=>e.department==='Leadership'||e.department===div.charAt(0).toUpperCase()+div.slice(1)).slice(0,4).map(emp=>`<div class="flex items-center justify-between p-3 bg-gray-50 rounded"><div class="flex items-center space-x-3"><div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">${getInitials(emp.name)}</div><div><div class="font-semibold text-gray-800 text-sm">${emp.name}</div><div class="text-xs text-gray-600">${emp.role}</div></div></div><span class="w-2 h-2 ${getStatusColor(emp.status)} rounded-full"></span></div>`).join('')}</div></div></div><div class="bg-white rounded-lg shadow p-6"><h2 class="text-xl font-bold text-gray-800 mb-4">Division Metrics</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div class="p-4 bg-blue-50 rounded-lg"><div class="text-sm text-gray-600 mb-1">Active Projects</div><div class="text-3xl font-bold text-gray-800">24</div></div><div class="p-4 bg-green-50 rounded-lg"><div class="text-sm text-gray-600 mb-1">Completed This Month</div><div class="text-3xl font-bold text-gray-800">18</div></div><div class="p-4 bg-purple-50 rounded-lg"><div class="text-sm text-gray-600 mb-1">Team Members</div><div class="text-3xl font-bold text-gray-800">26</div></div></div></div></div>`}
-        function Footer(){return`<footer class="bg-white border-t border-gray-200 mt-12"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"><div class="flex flex-col md:flex-row justify-between items-center gap-4"><div class="text-gray-600 text-sm">© 2025 Total Solutions Group. Employee-Owned Company.</div><div class="flex items-center space-x-6"><a href="mailto:info@mytsghome.com" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 text-sm"><span>✉️</span><span>info@mytsghome.com</span></a><a href="tel:407-880-2333" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 text-sm"><span>📞</span><span>(407) 880-2333</span></a></div></div></div></footer>`}
-        function render(){let content='';if(state.currentPage==='home')content=HomePage();else if(state.currentPage==='directory')content=DirectoryPage();else if(['commercial','engineering','production'].includes(state.currentPage))content=DivisionPage(state.currentPage);document.getElementById('root').innerHTML=`${Header()}<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">${content}</main>${Footer()}`;if(state.currentPage==='directory'){document.getElementById('searchInput')?.addEventListener('input',(e)=>{state.searchTerm=e.target.value;render()});document.getElementById('deptFilter')?.addEventListener('change',(e)=>{state.filterDept=e.target.value;render()});document.getElementById('statusFilter')?.addEventListener('change',(e)=>{state.filterStatus=e.target.value;render()})}}
-        function navigate(page){state.currentPage=page;state.searchTerm='';state.filterDept='all';state.filterStatus='all';render();window.scrollTo(0,0)}
-        window.navigate=navigate;render();
-    </script>
+  <div id="root" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"></div>
+
+  <script>
+    // --- Initial app state & data (kept your existing data structure) ---
+    let state = { currentPage: 'home', searchTerm: '', filterDept: 'all', filterStatus: 'all' };
+
+    const data = {
+      announcements: [
+        { id: 1, title: 'January Huddle Recap - Slang Game Winners! 🎉', date: '2026-01-16', category: 'Huddle', hasImage: false, description: 'Kayla Hoover, Jose Soto, and Elvira Borbon won...' },
+        { id: 2, title: 'Invoicing Deadline - January 23rd', date: '2026-01-16', category: 'Accounting', hasImage: false, description: 'Please submit all invoicing to Accounting ASAP. Last day...' },
+        { id: 3, title: '🎯 Unlock the Client Clues Mini Game - NOW LIVE!', date: '2026-01-16', category: 'Mini-Game', hasImage: false, description: 'Earn points by learning about our client...' },
+        { id: 4, title: 'Huddlemaster Sign-Up Sheet Posted! 🎤', date: '2026-01-16', category: 'Culture', hasImage: false, description: 'Want to lead a huddle? The sign-up sheet is in the main...' },
+        { id: 5, title: 'GGOB Culture Committee - Open Roles', date: '2026-01-16', category: 'Opportunities', hasImage: false, description: 'Join the Culture Committee! Roles available: ESOP C...' },
+        { id: 6, title: '🌶️ GOBA Chili Cook-Off & Oyster Roast - Jan 21', date: '2026-01-16', category: 'Event', hasImage: false, description: 'Wed 1/21, 5:30-7:30 PM at Florida Paints Wa...' },
+        { id: 7, title: '📚 TSG Book Club - "Listening Pays"', date: '2026-01-16', category: 'Book Club', hasImage: false, description: 'Join us every other week (30-45 mins, off the clock) ...' }
+      ],
+      quickLinks: [
+        { name: 'Paychex Time Tracking', url: 'https://login.flex.paychex.com/login_static/UsernameOnly.html?lang=en&downtime=false' },
+        { name: 'Ajera - Project Portal', url: 'https://login.ajera.com/' },
+        { name: 'EOS Ninety - L10', url: 'https://eos.ninety.io/home' },
+        { name: 'The Standard Benefits', url: 'https://login.standard.com/' },
+        { name: 'Employee Handbook', url: 'file:///O:/Company%20Handbook/TSG%20Handbook%202024%20rev.%2008.01.24.pdf' },
+        { name: 'Training', url: 'https://productivitynow.imaginit.com/#/login' }
+      ],
+      metrics: [
+        { metric: 'Total Billing Projections', value: '$697,000', target: '', status: 'neutral' },
+        { metric: 'Actual Invoicing Totals', value: '$79,775', target: 'Goal: $697,000', status: 'behind' },
+        { metric: 'Quarter Bonus Progress', value: '($172,850)', target: 'YTD PBT', status: 'behind' },
+        { metric: 'Dreams Come True', value: '7,845', target: 'YTD (2025)', status: 'on-track' }
+      ],
+      // existing employees list taken from your file
+      employees: [
+        { name: 'Mike Keesee', role: 'Founder & CEO', department: 'Leadership', status: 'online', email: 'mkeesee@mytsghome.com', phone: '(407) 880-2333' },
+        { name: 'Carl Brown', role: 'Co-Founder & Engineering Director', department: 'Engineering', status: 'online', email: 'cbrown@mytsghome.com', phone: '(407) 880-2333' },
+        { name: 'Alan Smith', role: 'COO', department: 'Leadership', status: 'away', email: 'asmith@mytsghome.com', phone: '(407) 880-2333' },
+        { name: 'Allen Beaumont', role: 'Director of Business Development', department: 'Commercial', status: 'online', email: 'abeaumont@mytsghome.com', phone: '(407) 880-2333' },
+        { name: 'Michelle Brown', role: 'HR Director', department: 'Leadership', status: 'online', email: 'mbrown@mytsghome.com', phone: '(407) 880-2333' },
+        { name: 'Melisa Jones', role: 'Finance Manager', department: 'Leadership', status: 'offline', email: 'mjones@mytsghome.com', phone: '(407) 880-2333' }
+      ]
+    };
+
+    // --- Helpers ---
+    function getInitials(n){ return n.split(' ').map(x=>x[0]).join('').toUpperCase(); }
+    function getStatusColor(s){ return {online:'bg-green-500',away:'bg-yellow-500',busy:'bg-red-500',offline:'bg-gray-400'}[s]||'bg-gray-400' }
+    function getStatusBadge(s){ return {online:'bg-green-100 text-green-700',away:'bg-yellow-100 text-yellow-700',busy:'bg-red-100 text-red-700',offline:'bg-gray-100 text-gray-700'}[s]||'bg-gray-100 text-gray-700' }
+
+    // --- Simple CSV parser supporting quoted fields ---
+    function parseCSV(text) {
+      const rows = [];
+      let cur = [], val = '', i = 0, inQuotes = false;
+      while (i < text.length) {
+        const ch = text[i];
+        if (inQuotes) {
+          if (ch === '"') {
+            if (text[i+1] === '"') { val += '"'; i += 2; continue; } // escaped quote
+            inQuotes = false; i++; continue;
+          } else {
+            val += ch; i++; continue;
+          }
+        } else {
+          if (ch === '"') { inQuotes = true; i++; continue; }
+          if (ch === ',') { cur.push(val); val = ''; i++; continue; }
+          if (ch === '\r') { i++; continue; }
+          if (ch === '\n') { cur.push(val); rows.push(cur); cur = []; val = ''; i++; continue; }
+          val += ch; i++;
+        }
+      }
+      // finalize
+      if (inQuotes) { /* ignore unterminated quote */ }
+      if (val !== '' || cur.length > 0) { cur.push(val); rows.push(cur); }
+      return rows;
+    }
+
+    // --- Merge CSV rows into data.employees by name (case-insensitive) ---
+    function mergeCsvIntoEmployees(rows) {
+      if (!rows || rows.length < 2) return;
+      const header = rows[0].map(h => h.trim());
+      const idx = (name) => header.indexOf(name);
+      const nameIdx = header.findIndex(h => /name/i.test(h));
+      const extIdx = header.findIndex(h => /ext/i.test(h) || /extension/i.test(h));
+      const remoteIdx = header.findIndex(h => /remote/i.test(h) || /days/i.test(h));
+      for (let r = 1; r < rows.length; r++) {
+        const row = rows[r];
+        if (!row || row.length === 0) continue;
+        const rName = (row[nameIdx] || '').trim();
+        if (!rName) continue;
+        const rExt = (extIdx >= 0 ? (row[extIdx] || '').trim() : '');
+        const rRemote = (remoteIdx >= 0 ? (row[remoteIdx] || '').trim() : '');
+        // find existing employee (case-insensitive exact match)
+        const found = data.employees.find(e => e.name && e.name.toLowerCase() === rName.toLowerCase());
+        if (found) {
+          if (rExt) found.extension = rExt;
+          if (rRemote) found.remoteDays = rRemote;
+        } else {
+          // add as a new entry with the CSV data
+          data.employees.push({
+            name: rName,
+            role: '',
+            department: '',
+            status: 'offline',
+            email: '',
+            phone: '',
+            extension: rExt,
+            remoteDays: rRemote
+          });
+        }
+      }
+    }
+
+    // --- Load CSV file and merge then re-render ---
+    function loadAndMergeCSV() {
+      const path = '/data/TSG_Extensions_Remote_Schedule_12.15.25.csv';
+      fetch(path)
+        .then(resp => {
+          if (!resp.ok) throw new Error('CSV fetch failed: ' + resp.status);
+          return resp.text();
+        })
+        .then(text => {
+          const rows = parseCSV(text);
+          mergeCsvIntoEmployees(rows);
+          render(); // re-render after merging
+        })
+        .catch(err => {
+          console.warn('Could not load CSV:', err);
+        });
+    }
+
+    // --- UI Components (simple render functions) ---
+    function Header() {
+      return `
+        <header class="bg-white shadow-sm border-b border-gray-200 mb-6">
+          <div class="py-4 flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-semibold">TSG Intranet</h1>
+              <p class="text-sm text-gray-500">Total Solutions Group</p>
+            </div>
+            <nav class="space-x-4">
+              <button onclick="navigate('home')" class="px-3 py-1 rounded-md bg-blue-600 text-white">Home</button>
+              <button onclick="navigate('directory')" class="px-3 py-1 rounded-md bg-white border">Directory</button>
+            </nav>
+          </div>
+        </header>
+      `;
+    }
+
+    function HomePage() {
+      return `
+        <div class="space-y-6">
+          <section class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow">
+            <h2 class="text-2xl font-bold">Welcome to the TSG Intranet</h2>
+            <p class="mt-1">Quick links, announcements, and team directory in one place.</p>
+          </section>
+
+          <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="col-span-2 bg-white rounded-lg p-4 shadow">
+              <h3 class="font-semibold mb-3">Announcements</h3>
+              <ul class="space-y-3">${data.announcements.map(a=>`<li class="border rounded p-3"><strong>${a.title}</strong><div class="text-xs text-gray-500">${a.date} • ${a.category}</div><div class="mt-1 text-sm text-gray-700">${a.description}</div></li>`).join('')}</ul>
+            </div>
+            <aside class="bg-white rounded-lg p-4 shadow">
+              <h3 class="font-semibold mb-3">Quick Links</h3>
+              <ul class="space-y-2">${data.quickLinks.map(l=>`<li><a href="${l.url}" class="text-blue-600 hover:underline" target="_blank" rel="noopener">${l.name}</a></li>`).join('')}</ul>
+            </aside>
+          </section>
+        </div>
+      `;
+    }
+
+    function DirectoryPage() {
+      const q = state.searchTerm.trim().toLowerCase();
+      let list = data.employees.filter(emp => {
+        if (!emp) return false;
+        if (state.filterDept !== 'all' && emp.department && emp.department.toLowerCase() !== state.filterDept.toLowerCase()) return false;
+        if (state.filterStatus !== 'all' && emp.status && emp.status.toLowerCase() !== state.filterStatus.toLowerCase()) return false;
+        if (!q) return true;
+        return (emp.name && emp.name.toLowerCase().includes(q))
+          || (emp.role && emp.role.toLowerCase().includes(q))
+          || (emp.department && emp.department.toLowerCase().includes(q));
+      });
+      // sort alphabetically
+      list = list.sort((a,b)=> (a.name || '').localeCompare(b.name || ''));
+
+      return `
+        <div>
+          <div class="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <input oninput="state.searchTerm=this.value; render()" placeholder="Search people, role, department" class="px-3 py-2 border rounded" />
+              <select onchange="state.filterDept=this.value; render()" class="px-2 py-2 border rounded">
+                <option value="all">All Departments</option>
+                <option value="Leadership">Leadership</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Commercial">Commercial</option>
+              </select>
+              <select onchange="state.filterStatus=this.value; render()" class="px-2 py-2 border rounded">
+                <option value="all">All Statuses</option>
+                <option value="online">Online</option>
+                <option value="away">Away</option>
+                <option value="offline">Offline</option>
+              </select>
+            </div>
+            <div class="text-sm text-gray-600">Showing ${list.length} people</div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${list.map(emp => `
+              <div class="bg-white p-4 rounded-lg shadow flex gap-4 items-center">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-lg font-semibold">${getInitials(emp.name || '?')}</div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <div class="font-semibold">${emp.name || ''}</div>
+                      <div class="text-sm text-gray-500">${emp.role || ''}${emp.department ? ' • ' + emp.department : ''}</div>
+                    </div>
+                    <div class="text-right text-xs ${getStatusBadge(emp.status || 'offline')} px-2 py-1 rounded">${emp.status || 'offline'}</div>
+                  </div>
+                  <div class="mt-2 text-sm text-gray-600 space-y-1">
+                    ${emp.email ? `<div>Email: <a href="mailto:${emp.email}" class="text-blue-600">${emp.email}</a></div>` : ''}
+                    ${emp.phone ? `<div>Phone: ${emp.phone}</div>` : ''}
+                    ${emp.extension ? `<div>Ext: ${emp.extension}</div>` : ''}
+                    ${emp.remoteDays ? `<div>Remote: ${emp.remoteDays}</div>` : ''}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function Footer() {
+      return `
+        <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500 rounded">
+          © ${new Date().getFullYear()} Total Solutions Group
+        </footer>
+      `;
+    }
+
+    // --- Router / Renderer ---
+    function render() {
+      const root = document.getElementById('root');
+      let content = '';
+      content += Header();
+      if (state.currentPage === 'home') content += HomePage();
+      else if (state.currentPage === 'directory') content += DirectoryPage();
+      content += Footer();
+      root.innerHTML = content;
+    }
+
+    function navigate(page) {
+      state.currentPage = page;
+      state.searchTerm = '';
+      state.filterDept = 'all';
+      state.filterStatus = 'all';
+      render();
+      window.scrollTo(0,0);
+    }
+
+    // Expose navigate for header buttons
+    window.navigate = navigate;
+
+    // Initial render
+    render();
+
+    // Load CSV from repo and merge on page load (re-renders after merge)
+    loadAndMergeCSV();
+
+  </script>
 </body>
 </html>
